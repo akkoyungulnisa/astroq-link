@@ -4,11 +4,20 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "astroq-link"
-version = "0.1.0"
-description = "Zero-dependency Circular Doubly Linked List, LIFO Stack & PQC Telemetry Vault"
+version = "0.2.0"
+description = "Zero-dependency circular data structures, priority telemetry routing, and verifiable storage."
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "hypothesis>=6.100",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

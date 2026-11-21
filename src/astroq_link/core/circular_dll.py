@@ -22,6 +22,14 @@ class CircularDoublyLinkedList(Generic[T]):
         self._overwrite_on_full: bool = overwrite_on_full
 
     @property
+    def head(self) -> Optional[DoublyNode[T]]:
+        return self._head
+
+    @property
+    def tail(self) -> Optional[DoublyNode[T]]:
+        return self._head.prev if self._head is not None else None
+
+    @property
     def size(self) -> int:
         return self._size
 
@@ -41,7 +49,6 @@ class CircularDoublyLinkedList(Generic[T]):
             if not self._overwrite_on_full:
                 raise RingBufferOverflowError("Dairesel tampon kapasitesi doldu.")
             assert self._head is not None
-            # En eski düğümün (head) verisini ez ve işaretçiyi bir adım kaydır (O(1))
             self._head.data = data
             written_node = self._head
             self._head = self._head.next
@@ -67,22 +74,49 @@ class CircularDoublyLinkedList(Generic[T]):
         """Verilen düğümü O(1) işaretçi güncellemesiyle halkadan çıkarır."""
         if self._head is None:
             raise ValueError("Boş listeden düğüm silinemez.")
+        if node.prev is None or node.next is None:
+            raise ValueError("Düğüm zaten halkadan çıkarılmış veya geçersiz.")
 
         removed_data = node.data
         if self._size == 1:
             self._head = None
         else:
-            assert node.prev is not None and node.next is not None
             node.prev.next = node.next
             node.next.prev = node.prev
             if node is self._head:
                 self._head = node.next
 
-        # Bellek sızıntısını (dangling reference) önlemek için işaretçileri temizle
         node.prev = None
         node.next = None
         self._size -= 1
         return removed_data
+
+    def remove(self, data: T) -> bool:
+        """Verilen değere sahip ilk düğümü bulur ve O(1) işaretçi güncellemesiyle halkadan çıkarır."""
+        if self._head is None:
+            return False
+
+        curr = self._head
+        for _ in range(self._size):
+            assert curr is not None
+            if curr.data == data:
+                self.remove_node(curr)
+                return True
+            curr = curr.next
+        return False
+
+    def clear(self) -> None:
+        """Tüm dairesel işaretçileri kırarak halkayı O(N) sürede temizler."""
+        curr = self._head
+        for _ in range(self._size):
+            if curr is None:
+                break
+            nxt = curr.next
+            curr.prev = None
+            curr.next = None
+            curr = nxt
+        self._head = None
+        self._size = 0
 
     def get_head(self) -> Optional[DoublyNode[T]]:
         return self._head
