@@ -1,0 +1,4 @@
+packet_id,altitude_m,velocity_ms,pressure_hpa,qber,status
+1,150.0,138.2,995.4,0.021,NOMINAL
+2,1915.0,42.5,803.1,0.184,QUANTUM_BREACH
+3,2000.0,15.0,795.0,0.019,NOMINAL
