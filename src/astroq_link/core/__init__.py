@@ -11,6 +11,9 @@ from .exceptions import (
 )
 from .immutable_types import (
     CipherBlock,
+    PacketLifecycleRecord,
+    PacketLifecycleState,
+    PacketPriority,
     QuantumTelemetryPacket,
     RollbackAction,
     SecurityIncident,
@@ -25,6 +28,9 @@ __all__ = [
     "StackUnderflowError",
     "RingBufferOverflowError",
     "IntegrityTamperError",
+    "PacketPriority",
+    "PacketLifecycleState",
+    "PacketLifecycleRecord",
     "QuantumTelemetryPacket",
     "CipherBlock",
     "RollbackAction",

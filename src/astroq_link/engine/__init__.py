@@ -1,11 +1,20 @@
-"""Mission telemetry routing and offline cyber-defense controllers."""
+"""Mission-critical telemetry routing, priority scheduling, and offline cyber-defense."""
 
-from .offline_shield import AutonomousEdgeShield, ShieldStats
+from .offline_shield import AutonomousEdgeShield
+from .scheduler import (
+    PriorityAgingQueue,
+    SchedulingPolicy,
+    StrategyBenchmarkResult,
+    compare_scheduling_strategies,
+)
 from .telemetry_router import MissionStats, TelemetryRouter
 
 __all__ = [
     "TelemetryRouter",
     "MissionStats",
     "AutonomousEdgeShield",
-    "ShieldStats",
+    "SchedulingPolicy",
+    "PriorityAgingQueue",
+    "StrategyBenchmarkResult",
+    "compare_scheduling_strategies",
 ]
